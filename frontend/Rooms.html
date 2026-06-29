@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - Hogenakkal Falls Resort</title>
+    
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/rooms.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header header--transparent" id="header">
+        <div class="header__container">
+            <a href="#" class="header__logo">MG<br>HOLIDAYS</a>
+            <nav>
+                <ul class="header__nav">
+                    <li><a href="./Home.html" class="header__nav-link">Home</a></li>
+                    <li><a href="./Facilities.html" class="header__nav-link">Facilities</a></li>
+                    <li><a href="./Rooms.html" class="header__nav-link active">Rooms</a></li>
+                    <li><a href="./Contact-us.html" class="header__nav-link">Contact us</a></li>
+                    <li><a href="./My Bookings.html" class="header__nav-link">My Bookings</a></li>
+                    <li><a href="#" class="header__nav-link" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Notification -->
+    <div class="notification" id="notification" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="notificationText">Login/Register to Book Rooms</span>
+        <button class="notification__close" onclick="closeNotification()">&times;</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <img src="./images/image2.png" alt="Hogenakkal Falls Resort background" class="hero__bg-image" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;filter: brightness(0.6);">
+        <div class="hero__container" style="position:relative;z-index:1;">
+            <div class="hero__content">
+                <div class="hero__welcome">WELCOME TO</div>
+                <h1 class="hero__title">MG<br>HOLIDAYS</h1>
+                <p class="hero__description">
+                    Nestled near the majestic Hogenakkal Falls,<br>
+                    MG Holidays is your perfect escape into nature and comfort.
+                </p>
+                <a href="#rooms" class="hero__cta">
+                    <i class="fas fa-calendar-check"></i>
+                    BOOK NOW
+                </a>
+            </div>
+        </div>
+        <div class="hero__scroll" onclick="scrollToSection('rooms')">
+            <span>Scroll</span>
+            <div class="hero__scroll-icon"></div>
+        </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section class="rooms-section" id="rooms">
+        <div class="rooms-container">
+            <h2 class="rooms-title">ROOMS AND RATES</h2>
+            <p class="rooms-subtitle">
+                From cozy standard spaces to spacious river-view suites, MG Holidays offers accommodations to suit your needs. Each room features elegant interiors, plush bedding, air conditioning, and scenic views of the surrounding hills or river. With attentive and transparent pricing, you get luxury and value in your perfect getaway.
+            </p>
+            
+            <!-- Date Selection -->
+            <div class="date-selection">
+                <div class="date-field">
+                    <label>Check-In Date</label>
+                    <input type="date" id="checkinDate" class="date-input">
+                </div>
+                <div class="date-field">
+                    <label>Check-Out Date</label>
+                    <input type="date" id="checkoutDate" class="date-input">
+                </div>
+            </div>
+    
+            <!-- Room Cards Container (Dynamic) -->
+            <div class="room-cards" id="roomCardsContainer">
+                <div style="text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-gold);"></i>
+                    <p style="margin-top: 15px; color: var(--text-gray);">Loading rooms...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials__container">
+            <h2 class="testimonials__title">What Our Guests Say</h2>
+            <div class="testimonial" id="testimonialContent">
+                <p class="testimonial__quote" id="testimonialQuote" style="opacity: 1; transition: opacity 0.3s;">Loading feedback...</p>
+                <p class="testimonial__author" id="testimonialAuthor" style="opacity: 1; transition: opacity 0.3s;"></p>
+            </div>
+            <div class="testimonials__nav">
+                <button class="testimonials__nav-btn" onclick="previousTestimonial()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonials__nav-btn" onclick="nextTestimonial()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer__content">
+            <div>
+                <div class="footer__brand">MG</div>
+                <div class="footer__brand2">HOLIDAYS</div>
+                <div class="footer__address">
+                    MG Holidays, Near Hogenakkal Main Falls, <br>
+                    Dharmapuri District, Tamil Nadu<br>
+                    +91 98765 43210<br>
+                    info@mgholidays.in
+                </div>
+            </div>
+            <div>
+                <h3 class="footer__section-title">About Us</h3>
+                <h3 class="footer__section-title">Contact</h3>
+                <h3 class="footer__section-title">Terms & Conditions</h3>
+            </div>
+            <div>
+                <div class="footer__social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer__section-title">Subscribe to our newsletter</h3>
+                <div class="footer__newsletter">
+                    <input type="email" placeholder="Email Address" id="newsletterEmail">
+                    <button onclick="subscribeNewsletter()">OK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // API Base URL - CHANGE THIS TO YOUR ACTUAL API URL
+        const API_BASE_URL = 'http://localhost:8000/api';
+
+        // Global variables
+        let currentTestimonial = 0;
+        let feedbacks = [];
+        let rooms = [];
+        let userData = null;
+        let roomBookingData = {};
+
+        // Get user data from localStorage
+        function getUserData() {
+            const userStr = localStorage.getItem('mgHolidaysUser');
+            if (userStr) {
+                try {
+                    return JSON.parse(userStr);
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'error') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            
+            if (type === 'success') {
+                notification.style.background = '#10b981';
+            } else {
+                notification.style.background = '#ef4444';
+            }
+            
+            notification.style.display = 'flex';
+            setTimeout(() => closeNotification(), 5000);
+        }
+
+        // Close notification
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.animation = 'slideIn 0.3s ease-out reverse';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 300);
+        }
+
+        // Fetch all rooms
+        async function fetchRooms() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/getallrooms`);
+                if (!response.ok) throw new Error('Failed to fetch rooms');
+                rooms = await response.json();
+                renderRooms();
+            } catch (error) {
+                console.error('Error fetching rooms:', error);
+                document.getElementById('roomCardsContainer').innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ef4444;"></i>
+                        <p style="margin-top: 15px; color: var(--text-gray);">Failed to load rooms. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render rooms dynamically
+        function renderRooms() {
+            const container = document.getElementById('roomCardsContainer');
+            
+            if (!rooms || rooms.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding: 40px;">No rooms available.</p>';
+                return;
+            }
+
+            container.innerHTML = rooms.map(room => {
+                roomBookingData[room.id] = {
+                    no_of_rooms: 1,
+                    no_of_people: room.max_capacity_per_room
+                };
+
+                return `
+                    <div class="room-card">
+                        <div class="room-image-container">
+                            <img src="${room.room_img_url || './images/default-room.png'}" 
+                                 alt="${room.type} Room at MG Holidays" 
+                                 class="room-image"
+                                 onerror="this.src='./images/default-room.png'">
+                            <div class="room-type-label">${room.type.toUpperCase()} ROOM</div>
+                        </div>
+                        
+                        <!-- Room Details List -->
+                        <div class="room-details-list" id="details-${room.id}" style="display: none;">
+                            <h4>Room Amenities & Features</h4>
+                            <ul>
+                                ${room.facilities && room.facilities.length > 0 
+                                    ? room.facilities.map(facility => `<li><i class="fas fa-check"></i> ${facility}</li>`).join('')
+                                    : '<li><i class="fas fa-check"></i> Standard amenities included</li>'}
+                            </ul>
+                        </div>
+                        
+                        <div class="room-footer">
+                            <div class="room-details-left">
+                                <button class="view-details-btn" onclick="toggleDetails('details-${room.id}', this)">
+                                    <i class="fas fa-plus"></i>
+                                    <span>VIEW ROOM DETAILS</span>
+                                </button>
+                                <div class="room-capacity">
+                                    <div class="capacity-item">
+                                        <i class="fas fa-bed"></i>
+                                        <div class="capacity-controls">
+                                            <button class="capacity-btn minus" onclick="changeRoomCount(${room.id}, -1)">-</button>
+                                            <span class="capacity-count" id="rooms-${room.id}">1</span>
+                                            <button class="capacity-btn plus" onclick="changeRoomCount(${room.id}, 1)">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="capacity-item">
+                                        <i class="fas fa-user"></i>
+                                        <div class="capacity-controls">
+                                            <button class="capacity-btn minus" onclick="changePeopleCount(${room.id}, -1)">-</button>
+                                            <span class="capacity-count" id="people-${room.id}">${room.max_capacity_per_room}</span>
+                                            <button class="capacity-btn plus" onclick="changePeopleCount(${room.id}, 1)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="room-booking">
+                                <button class="room-price" onclick="bookRoom(${room.id})" style="cursor: pointer; border: none;">
+                                    ₹${room.price_per_night.toLocaleString()} <span>Avg/night</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Fetch all feedbacks
+        async function fetchFeedbacks() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/getallfeedbacks`);
+                if (!response.ok) throw new Error('Failed to fetch feedbacks');
+                feedbacks = await response.json();
+                if (feedbacks.length > 0) {
+                    updateTestimonial();
+                }
+            } catch (error) {
+                console.error('Error fetching feedbacks:', error);
+                document.getElementById('testimonialQuote').textContent = '"Unable to load testimonials at this time."';
+                document.getElementById('testimonialAuthor').textContent = '';
+            }
+        }
+
+        // Update testimonial display
+        function updateTestimonial() {
+            if (feedbacks.length === 0) return;
+
+            const quote = document.getElementById('testimonialQuote');
+            const author = document.getElementById('testimonialAuthor');
+            
+            const feedback = feedbacks[currentTestimonial];
+            quote.textContent = `"${feedback.feedback}"`;
+            author.textContent = `${feedback.username}`;
+        }
+
+        function previousTestimonial() {
+            currentTestimonial = currentTestimonial > 0 ? currentTestimonial - 1 : feedbacks.length - 1;
+            updateTestimonial();
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = currentTestimonial < feedbacks.length - 1 ? currentTestimonial + 1 : 0;
+            updateTestimonial();
+        }
+
+        // Toggle room details
+        function toggleDetails(detailsId, button) {
+            const detailsElement = document.getElementById(detailsId);
+            const icon = button.querySelector('i');
+            const text = button.querySelector('span');
+            
+            if (detailsElement.style.display === 'none' || detailsElement.style.display === '') {
+                detailsElement.style.display = 'block';
+                icon.className = 'fas fa-minus';
+                text.textContent = 'HIDE ROOM DETAILS';
+            } else {
+                detailsElement.style.display = 'none';
+                icon.className = 'fas fa-plus';
+                text.textContent = 'VIEW ROOM DETAILS';
+            }
+        }
+
+        // Change room count
+        function changeRoomCount(roomId, change) {
+            const countElement = document.getElementById(`rooms-${roomId}`);
+            let currentCount = parseInt(countElement.textContent);
+            const room = rooms.find(r => r.id === roomId);
+            
+            let newCount = currentCount + change;
+            if (newCount < 1) newCount = 1;
+            if (newCount > room.no_of_available_rooms) {
+                showNotification(`Only ${room.no_of_available_rooms} rooms available`);
+                return;
+            }
+            
+            countElement.textContent = newCount;
+            roomBookingData[roomId].no_of_rooms = newCount;
+            
+            countElement.style.transform = 'scale(1.2)';
+            setTimeout(() => { countElement.style.transform = 'scale(1)'; }, 200);
+        }
+
+        // Change people count
+        function changePeopleCount(roomId, change) {
+            const countElement = document.getElementById(`people-${roomId}`);
+            let currentCount = parseInt(countElement.textContent);
+            const room = rooms.find(r => r.id === roomId);
+            
+            let newCount = currentCount + change;
+            if (newCount < 1) newCount = 1;
+            if (newCount > room.max_capacity_per_room * roomBookingData[roomId].no_of_rooms) {
+                showNotification(`Maximum ${room.max_capacity_per_room} people per room`);
+                return;
+            }
+            
+            countElement.textContent = newCount;
+            roomBookingData[roomId].no_of_people = newCount;
+            
+            countElement.style.transform = 'scale(1.2)';
+            setTimeout(() => { countElement.style.transform = 'scale(1)'; }, 200);
+        }
+
+        // Book room
+        async function bookRoom(roomId) {
+            if (!userData) {
+                showNotification('Please login to book a room');
+                setTimeout(() => {
+                    window.location.href = './Login.html';
+                }, 1500);
+                return;
+            }
+
+            const checkinDate = document.getElementById('checkinDate').value;
+            const checkoutDate = document.getElementById('checkoutDate').value;
+
+            if (!checkinDate || !checkoutDate) {
+                showNotification('Please select check-in and check-out dates');
+                return;
+            }
+
+            if (new Date(checkinDate) >= new Date(checkoutDate)) {
+                showNotification('Check-out date must be after check-in date');
+                return;
+            }
+
+            const bookingData = {
+                user_id: userData.userid,
+                checkin_date: checkinDate,
+                checkout_date: checkoutDate,
+                room_id: roomId,
+                no_of_rooms: roomBookingData[roomId].no_of_rooms,
+                no_of_people: roomBookingData[roomId].no_of_people,
+                checkin_time: "15:00:00",
+                checkout_time: "11:00:00"
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/createbooking`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showNotification(`Booking successful! Total: ₹${result.total_amount}`, 'success');
+                    setTimeout(() => {
+                        window.location.href = './My Bookings.html';
+                    }, 2000);
+                } else {
+                    showNotification(result.message || 'Booking failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error creating booking:', error);
+                showNotification('Failed to create booking. Please try again.');
+            }
+        }
+
+        // Set default dates
+        function setDefaultDates() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            document.getElementById('checkinDate').value = today.toISOString().split('T')[0];
+            document.getElementById('checkoutDate').value = tomorrow.toISOString().split('T')[0];
+            
+            document.getElementById('checkinDate').min = today.toISOString().split('T')[0];
+            document.getElementById('checkoutDate').min = tomorrow.toISOString().split('T')[0];
+        }
+
+        // Other utility functions
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email && email.includes('@')) {
+                showNotification('Thank you for subscribing to our newsletter!', 'success');
+                document.getElementById('newsletterEmail').value = '';
+            } else {
+                showNotification('Please enter a valid email address.');
+            }
+        }
+
+        // Logout handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutA = document.getElementById('logoutLink');
+            if (logoutA) {
+                logoutA.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('mgHolidaysUser');
+                    window.location.href = "./Login.html";
+                };
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            userData = getUserData();
+            setDefaultDates();
+            fetchRooms();
+            fetchFeedbacks();
+
+            // Auto-rotate testimonials
+            setInterval(() => {
+                if (feedbacks.length > 0) nextTestimonial();
+            }, 5000);
+
+            // Date validation
+            document.getElementById('checkinDate').addEventListener('change', function() {
+                const checkinDate = new Date(this.value);
+                const checkoutInput = document.getElementById('checkoutDate');
+                const minCheckout = new Date(checkinDate);
+                minCheckout.setDate(minCheckout.getDate() + 1);
+                checkoutInput.min = minCheckout.toISOString().split('T')[0];
+            });
+        });
+    </script>
+</body>
+</html>

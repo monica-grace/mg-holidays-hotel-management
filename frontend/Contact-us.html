@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - Contact Us</title>
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #23305e;
+            --primary-gold: #d4af37;
+            --light-gold: #f4e4a6;
+            --dark-blue: #23305e;
+            --text-white: #ffffff;
+            --text-gray: #6b7280;
+            --text-dark: #374151;
+            --border-gray: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: #f8fafc;
+        }
+
+       /* Header Styles */
+       .header {
+            background: var(--primary-blue);
+            padding: 0;
+            position: relative;
+        }
+
+        .header__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .header__logo {
+            background: var(--primary-gold);
+            color: var(--text-white);
+            padding: 15px 25px;
+            border-radius: 0px 0px 12px 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-align: center;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 40px;
+        }
+
+        .header__nav {
+            display: flex;
+            list-style: none;
+            gap: 42px;
+            margin: 0;
+            margin-left: auto;
+        }
+
+        .header__nav-link {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .header__nav-link.active {
+            border-bottom: 2px solid var(--text-white);
+        }
+
+        .header__nav-link:hover {
+            color: var(--primary-gold);
+        }
+
+        .logout-icon {
+            margin-right: 5px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--primary-blue);
+            padding: 60px 0 80px 0;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        .contact-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-align: center;
+            color: var(--text-white);
+            margin: 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: #f8fafc;
+            padding: 60px 0 80px 0;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin-bottom: 50px;
+            max-width: 800px;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Left Column - Contact Info */
+        .contact-info {
+            padding-right: 20px;
+        }
+
+        .location-info {
+            margin-bottom: 30px;
+        }
+
+        .location-address {
+            font-size: 18px;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .view-map-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .view-map-link:hover {
+            color: var(--primary-gold);
+        }
+
+        .view-map-link::after {
+            content: '→';
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .contact-details {
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .contact-item strong {
+            font-weight: 600;
+        }
+
+        /* Right Column - Contact Form */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary-gold);
+            color: var(--text-white);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: auto;
+            float: right;
+        }
+
+        .submit-btn:hover {
+            background: #b8941f;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--text-white);
+            padding: 50px 0 30px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 40px solid var(--primary-blue);
+            margin-top: -40px;
+        }
+
+        .footer__content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer__brand {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .footer__brand2 {
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .footer__address {
+            line-height: 1.8;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .footer__section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-white);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .footer__section-title:hover {
+            color: var(--primary-gold);
+        }
+
+        .footer__social-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .footer__social-item:hover {
+            color: var(--primary-gold);
+        }
+
+        .footer__social-item i {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .footer__newsletter-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+
+        .footer__newsletter {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer__newsletter input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            background: #374151;
+            color: var(--text-white);
+            font-size: 14px;
+        }
+
+        .footer__newsletter input::placeholder {
+            color: #9ca3af;
+        }
+
+        .footer__newsletter button {
+            background: var(--primary-gold);
+            color: var(--text-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .footer__newsletter button:hover {
+            background: #b8941f;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header__container {
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .header__nav {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-left: 0;
+            }
+
+            .hero-container {
+                padding: 0 20px;
+            }
+
+            .contact-title {
+                font-size: 36px;
+            }
+
+            .content-container {
+                padding: 0 20px;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-info {
+                padding-right: 0;
+            }
+
+            .contact-form {
+                padding: 30px 20px;
+            }
+
+            .footer__content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 20px;
+            }
+
+            .submit-btn {
+                width: 100%;
+                float: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .header__nav {
+                gap: 15px;
+            }
+
+            .header__nav-link {
+                font-size: 14px;
+            }
+
+            .contact-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <a class="header__logo">MG<br>HOLIDAYS</a>
+            <nav style="margin-left: 453px;">
+                <ul class="header__nav">  <li><a href="./Home.html" class="header__nav-link" onclick="window.location.href='./Home.html'; return false;">Home</a></li>
+                    <li><a href="./Facilities.html" class="header__nav-link" onclick="window.location.href='./Facilities.html'; return false;">Facilities</a></li>
+                    <li><a href="./Rooms.html" class="header__nav-link" onclick="window.location.href='./Rooms.html'; return false;">Rooms</a></li>
+                    <li><a href="./Contact-us.html" class="header__nav-link active" onclick="window.location.href='./Contact-us.html'; return false;">Contact us</a></li>
+                    <li id="myBookingsNav" style="display:none;"><a href="./My Bookings.html" class="header__nav-link">My Bookings</a></li>
+                    <li>
+                        <a href="#" class="header__nav-link" id="loginLogoutBtn">
+                            <span id="loginLogoutIcon"></span>
+                            <span id="loginLogoutText"></span>
+                        </a>
+                    </li>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var user = localStorage.getItem('mgHolidaysUser');
+                            var loginLogoutBtn = document.getElementById('loginLogoutBtn');
+                            var loginLogoutText = document.getElementById('loginLogoutText');
+                            var loginLogoutIcon = document.getElementById('loginLogoutIcon');
+                            var myBookingsNav = document.getElementById('myBookingsNav');
+
+                            if (user) {
+                                // User is logged in
+                                loginLogoutText.textContent = "Logout";
+                                loginLogoutIcon.innerHTML = '<i class="fas fa-sign-out-alt"></i>';
+                                loginLogoutBtn.onclick = function(e) {
+                                    e.preventDefault();
+                                    localStorage.removeItem('mgHolidaysUser');
+                                    window.location.href = "./Login.html";
+                                };
+                                if (myBookingsNav) myBookingsNav.style.display = '';
+                            } else {
+                                // User not logged in
+                                loginLogoutText.textContent = "Login/Register";
+                                loginLogoutIcon.innerHTML = '<i class="fas fa-sign-in-alt"></i>';
+                                loginLogoutBtn.onclick = function(e) {
+                                    e.preventDefault();
+                                    window.location.href = "./Login.html";
+                                };
+                                if (myBookingsNav) myBookingsNav.style.display = 'none';
+                            }
+                        });
+                    </script>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <h1 class="contact-title">CONTACT-US</h1>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-container">
+            <h2 class="section-title">WE ARE HERE FOR YOU</h2>
+            <p class="section-description">
+                Our team is committed to making your stay memorable from the moment you arrive. Need help 
+                planning your local tour? Want breakfast in bed? We're just a call away. Whether it's your first time 
+                here or your fifth, MG Holidays ensures every guest is treated with warmth, care, and attention to 
+                detail.
+            </p>
+
+            <div class="contact-content">
+                <!-- Left Column - Contact Information -->
+                <div class="contact-info">
+                    <div class="location-info">
+                        <div class="location-address">
+                            Near Hogenakkal Main Falls,<br>
+                            Dharmapuri District, Tamil Nadu
+                        </div>
+                        <a href="#" class="view-map-link">View map</a>
+                    </div>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <strong>Phone:</strong> +91 98765 43210
+                        </div>
+                        <div class="contact-item">
+                            <strong>Email:</strong> info@mgholidays.in
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Contact Form -->
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Name</label>
+                            <input type="text" class="form-input" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" class="form-input" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">Message</label>
+                            <textarea class="form-input form-textarea" id="message" name="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__content">
+            <div>
+                <div class="footer__brand">MG</div>
+                <div class="footer__brand2">HOLIDAYS</div>
+                <div class="footer__address">
+                    MG Holidays, Near Hogenakkal Main Falls,<br>
+                    Dharmapuri District, Tamil Nadu<br>
+                    +91 98765 43210<br>
+                    info@mgholidays.in
+                </div>
+            </div>
+            <div>
+                <div class="footer__section-title">About Us</div>
+                <div class="footer__section-title">Contact</div>
+                <div class="footer__section-title">Terms & Conditions</div>
+            </div>
+            <div>
+                <a href="#" class="footer__social-item">
+                    <i class="fab fa-facebook"></i>
+                    Facebook
+                </a>
+                <a href="#" class="footer__social-item">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a>
+                <a href="#" class="footer__social-item">
+                    <i class="fab fa-instagram"></i>
+                    Instagram
+                </a>
+            </div>
+            <div>
+                <div class="footer__newsletter-title">Subscribe to our newsletter</div>
+                <div class="footer__newsletter">
+                    <input type="email" placeholder="Email Address" id="newsletterEmail">
+                    <button onclick="subscribeNewsletter()">OK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Newsletter subscription function
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing to our newsletter!');
+                document.getElementById('newsletterEmail').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && message) {
+                alert('Thank you for your message! We will get back to you soon.');
+                // Reset form
+                this.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // View map functionality
+        document.querySelector('.view-map-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            // In a real application, this would open Google Maps or similar
+            alert('Opening map view for Hogenakkal Main Falls, Dharmapuri District, Tamil Nadu');
+        });
+    </script>
+</body>
+</html>

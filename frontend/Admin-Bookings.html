@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - Bookings Management</title>
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #23305e;
+            --primary-gold: #d4af37;
+            --light-gold: #f4e4a6;
+            --dark-blue: #23305e;
+            --text-white: #ffffff;
+            --text-gray: #6b7280;
+            --text-dark: #374151;
+            --border-gray: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: #f8fafc;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--primary-blue);
+            padding: 0;
+            position: relative;
+        }
+
+        .header__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .header__logo {
+            background: var(--primary-gold);
+            color: var(--text-white);
+            padding: 15px 25px;
+            border-radius: 0px 0px 12px 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-align: center;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 0;
+            left: 40px;
+        }
+
+        .header__nav {
+            display: flex;
+            list-style: none;
+            gap: 45px;
+            margin: 0;
+            margin-left: auto;
+        }
+
+        .header__nav-link {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .header__nav-link.active {
+            border-bottom: 2px solid var(--text-white);
+        }
+
+        .header__nav-link:hover {
+            color: var(--primary-gold);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--primary-blue);
+            padding: 60px 0 80px 0;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bookings-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-align: center;
+            color: var(--text-white);
+            margin: 0;
+        }
+
+        .hero-buttons {
+            position: absolute;
+            right: 38px;
+            display: flex;
+            gap: 15px;
+            margin-top: 310px;
+        }
+
+        .hero-btn {
+            background: var(--primary-blue);
+            color: var(--text-white);
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background: #1a2447;
+            color: var(--text-white);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: #f8fafc;
+            padding: 40px 0 60px 0;
+            margin-top: 4%;
+        }
+
+        .bookings-table-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .bookings-table th {
+            background: var(--primary-blue);
+            color: var(--text-white);
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .bookings-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 12px;
+        }
+
+        .bookings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .bookings-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* Status Styles */
+        .status-completed {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .status-checkedin {
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .status-yet-to-stay {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .status-cancelled {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        /* Payment Status */
+        .payment-collected {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .payment-pending {
+            color: #d97706;
+            font-weight: 600;
+        }
+
+        .payment-not-needed {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* Action Links */
+        .action-link {
+            color: var(--primary-blue);
+            cursor: pointer;
+            margin: 0 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 11px;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+
+        .action-link:hover {
+            color: var(--primary-gold);
+            text-decoration: underline;
+        }
+
+        .action-link.green {
+            color: #16a34a;
+        }
+
+        .action-link.red {
+            color: #dc2626;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 0px;
+            border: none;
+            border-bottom: 1px solid #d1d5db;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background: transparent;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: var(--primary-blue);
+        }
+
+        .form-input[type="date"] {
+            color: var(--text-dark);
+        }
+
+        .form-input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0.6;
+        }
+
+        /* Counter Styles */
+        .counter-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .counter-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .counter-btn:hover {
+            background: #1e2749;
+        }
+
+        .counter-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .counter-value {
+            font-size: 24px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        /* Modal Buttons */
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .modal-btn-cancel {
+            background: white;
+            color: var(--text-dark);
+            border-color: #e5e7eb;
+        }
+
+        .modal-btn-cancel:hover {
+            background: #f9fafb;
+        }
+
+        .modal-btn-save {
+            background: #000;
+            color: white;
+        }
+
+        .modal-btn-save:hover {
+            background: #333;
+        }
+
+        .modal-btn-close {
+            background: #000;
+            color: white;
+        }
+
+        .modal-btn-close:hover {
+            background: #333;
+        }
+
+        /* Feedback Table */
+        .feedback-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .feedback-table th {
+            background: var(--primary-blue);
+            color: var(--text-white);
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .feedback-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        .feedback-table td:first-child {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .feedback-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .feedback-table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-blue);
+            color: var(--text-white);
+            padding: 50px 0 30px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 40px solid var(--primary-blue);
+            margin-top: -40px;
+        }
+
+        .footer__content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer__brand {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .footer__brand2 {
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .footer__address {
+            line-height: 1.8;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .footer__section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-white);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .footer__section-title:hover {
+            color: var(--primary-gold);
+        }
+
+        .footer__social-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .footer__social-item:hover {
+            color: var(--primary-gold);
+        }
+
+        .footer__social-item i {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .footer__newsletter-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+
+        .footer__newsletter {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer__newsletter input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            background: #374151;
+            color: var(--text-white);
+            font-size: 14px;
+        }
+
+        .footer__newsletter input::placeholder {
+            color: #9ca3af;
+        }
+
+        .footer__newsletter button {
+            background: var(--primary-gold);
+            color: var(--text-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .footer__newsletter button:hover {
+            background: #b8941f;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header__container {
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .header__logo {
+                position: static;
+                margin-bottom: 10px;
+            }
+
+            .header__nav {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-left: 0;
+            }
+
+            .hero-container {
+                padding: 0 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .bookings-title {
+                font-size: 36px;
+                margin-bottom: 20px;
+            }
+
+            .hero-buttons {
+                position: static;
+                transform: none;
+            }
+
+            .bookings-table-container {
+                padding: 0 20px;
+            }
+
+            .bookings-table {
+                font-size: 10px;
+            }
+
+            .bookings-table th,
+            .bookings-table td {
+                padding: 6px 4px;
+            }
+
+            .footer__content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 20px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bookings-title {
+                font-size: 28px;
+            }
+
+            .header__nav {
+                gap: 15px;
+            }
+
+            .header__nav-link {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <a class="header__logo">MG<br>HOLIDAYS</a>
+            <nav style="margin-left: 453px;">
+                <ul class="header__nav">
+                    <li><a href="#home" class="header__nav-link">Home</a></li>
+                    <li><a href="#facilities" class="header__nav-link">Facilities</a></li>
+                    <li><a href="#rooms" class="header__nav-link">Rooms</a></li>
+                    <li><a href="#bookings" class="header__nav-link active">Bookings</a></li>
+                    <li><a href="#logout" class="header__nav-link">Logout <i class="fas fa-sign-out-alt"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <h1 class="bookings-title">Bookings</h1>
+            <div class="hero-buttons">
+                <button class="hero-btn" onclick="openViewFeedbackModal()">View Feedbacks</button>
+                <button class="hero-btn" onclick="openNewBookingModal()">New Booking</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="bookings-table-container">
+            <table class="bookings-table">
+                <thead>
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Name</th>
+                        <th>Email ID</th>
+                        <th>Check-In Date</th>
+                        <th>Check-Out Date</th>
+                        <th>Room Type</th>
+                        <th>No. Of Rooms</th>
+                        <th>No. Of People</th>
+                        <th>Checked-In Time</th>
+                        <th>Checked-Out Time</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Monica Grace</td>
+                        <td>moni12@gmail.com</td>
+                        <td>22-Feb-2025</td>
+                        <td>23-Feb-2025</td>
+                        <td>Single Room</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>11:00 AM</td>
+                        <td>3:45 PM</td>
+                        <td><span class="status-completed">Completed</span></td>
+                        <td><span class="payment-collected">Collected</span></td>
+                        <td><a class="action-link green">Stay Completed</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jeeva</td>
+                        <td>jeeva.s90@gmail.com</td>
+                        <td>24-Feb-2025</td>
+                        <td>25-Feb-2025</td>
+                        <td>Single Room</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>2:00 PM</td>
+                        <td>-</td>
+                        <td><span class="status-checkedin">Checked-In</span></td>
+                        <td><span class="payment-collected">Collected</span></td>
+                        <td>
+                            <a class="action-link">Check-out</a><br>
+                            <a class="action-link red">Cancel</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Tamil</td>
+                        <td>tamil200511@gmail.com</td>
+                        <td>27-Feb-2025</td>
+                        <td>28-Feb-2025</td>
+                        <td>Single Room</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="status-yet-to-stay">Yet to Stay</span></td>
+                        <td><span class="payment-pending">Pending</span></td>
+                        <td>
+                            <a class="action-link">Collected Payment</a><br>
+                            <a class="action-link">Check-In</a><br>
+                            <a class="action-link red">Cancel</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Ragavan</td>
+                        <td>123ragavan@gmail.com</td>
+                        <td>24-Feb-2025</td>
+                        <td>25-Feb-2025</td>
+                        <td>Single Room</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="status-cancelled">Cancelled</span></td>
+                        <td><span class="payment-not-needed">Not Needed</span></td>
+                        <td><span class="action-link red">Cancelled</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Simbu</td>
+                        <td>rajasimbu2@gmail.com</td>
+                        <td>24-Mar-2025</td>
+                        <td>25-Mar-2025</td>
+                        <td>Single Room</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="status-yet-to-stay">Yet to Stay</span></td>
+                        <td><span class="payment-pending">Pending</span></td>
+                        <td>
+                            <a class="action-link">Collected Payment</a><br>
+                            <a class="action-link">Check-In</a><br>
+                            <a class="action-link red">Cancel</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- New Booking Modal -->
+    <div class="modal-overlay" id="newBookingModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeNewBookingModal()">&times;</button>
+            <h2 class="modal-title">Add New Booking</h2>
+            
+            <form id="newBookingForm">
+                <div class="form-group">
+                    <label class="form-label">Guest Email ID</label>
+                    <input type="email" class="form-input" id="guestEmail" value="Single">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Check-In Date</label>
+                    <input type="date" class="form-input" id="checkinDate" value="2022-02-24">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Check-Out Date</label>
+                    <input type="date" class="form-input" id="checkoutDate" value="2022-02-24">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Room Type</label>
+                    <input type="text" class="form-input" id="roomType" value="Single">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">No. Of People</label>
+                    <div class="counter-group">
+                        <button type="button" class="counter-btn" onclick="decrementCounter('people')">−</button>
+                        <span class="counter-value" id="peopleCount">1</span>
+                        <button type="button" class="counter-btn" onclick="incrementCounter('people')">+</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">No. Of People</label>
+                    <div class="counter-group">
+                        <button type="button" class="counter-btn" onclick="decrementCounter('rooms')">−</button>
+                        <span class="counter-value" id="roomsCount">1</span>
+                        <button type="button" class="counter-btn" onclick="incrementCounter('rooms')">+</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeNewBookingModal()">Cancel</button>
+                <button class="modal-btn modal-btn-save" onclick="saveNewBooking()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Feedbacks Modal -->
+    <div class="modal-overlay" id="viewFeedbackModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeViewFeedbackModal()">&times;</button>
+            <h2 class="modal-title">View Feedbacks</h2>
+            
+            <table class="feedback-table">
+                <thead>
+                    <tr>
+                        <th>S. No</th>
+                        <th>Guest Name</th>
+                        <th>Feedback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Monica</td>
+                        <td>Look rooms and Good service</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Tamil</td>
+                        <td>The room was excellent</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Jeeva</td>
+                        <td>Nice!!</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-close" onclick="closeViewFeedbackModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__content">
+            <div>
+                <div class="footer__brand">MG</div>
+                <div class="footer__brand2">HOLIDAYS</div>
+                <div class="footer__address">
+                    MG Holidays, Near Hogenakkal Main Falls,<br>
+                    Dharmapuri District, Tamil Nadu<br>
+                    +91 98765 43210<br>
+                    info@mgholidays.in
+                </div>
+            </div>
+            <div>
+                <a href="#about" class="footer__section-title">About Us</a>
+                <a href="#contact" class="footer__section-title">Contact</a>
+                <a href="#terms" class="footer__section-title">Terms & Conditions</a>
+            </div>
+            <div>
+                <a href="#" class="footer__social-item">
+                    <i class="fab fa-facebook"></i>
+                    Facebook
+                </a>
+                <a href="#" class="footer__social-item">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a>
+                <a href="#" class="footer__social-item">
+                    <i class="fab fa-instagram"></i>
+                    Instagram
+                </a>
+            </div>
+            <div>
+                <div class="footer__newsletter-title">Subscribe to our newsletter</div>
+                <div class="footer__newsletter">
+                    <input type="email" placeholder="Email Address" id="newsletterEmail">
+                    <button onclick="subscribeNewsletter()">OK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Newsletter subscription function
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing to our newsletter!');
+                document.getElementById('newsletterEmail').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // New Booking Modal Functions
+        function openNewBookingModal() {
+            document.getElementById('newBookingModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNewBookingModal() {
+            document.getElementById('newBookingModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveNewBooking() {
+            const guestEmail = document.getElementById('guestEmail').value;
+            const checkinDate = document.getElementById('checkinDate').value;
+            const checkoutDate = document.getElementById('checkoutDate').value;
+            const roomType = document.getElementById('roomType').value;
+
+            if (!guestEmail || !checkinDate || !checkoutDate || !roomType) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            alert('New booking created successfully!');
+            closeNewBookingModal();
+        }
+
+        // View Feedback Modal Functions
+        function openViewFeedbackModal() {
+            document.getElementById('viewFeedbackModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeViewFeedbackModal() {
+            document.getElementById('viewFeedbackModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Counter Functions
+        function incrementCounter(type) {
+            const countElement = document.getElementById(type + 'Count');
+            let currentValue = parseInt(countElement.textContent);
+            if (currentValue < 20) {
+                countElement.textContent = currentValue + 1;
+            }
+        }
+
+        function decrementCounter(type) {
+            const countElement = document.getElementById(type + 'Count');
+            let currentValue = parseInt(countElement.textContent);
+            if (currentValue > 1) {
+                countElement.textContent = currentValue - 1;
+            }
+        }
+
+        // Action link handlers
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('action-link')) {
+                const text = event.target.textContent.trim();
+                
+                if (text === 'Check-out') {
+                    if (confirm('Confirm check-out for this guest?')) {
+                        alert('Guest checked out successfully.');
+                    }
+                } else if (text === 'Check-In') {
+                    if (confirm('Confirm check-in for this guest?')) {
+                        alert('Guest checked in successfully.');
+                    }
+                } else if (text === 'Collected Payment') {
+                    if (confirm('Mark payment as collected?')) {
+                        alert('Payment status updated to collected.');
+                    }
+                } else if (text === 'Cancel') {
+                    if (confirm('Are you sure you want to cancel this booking?')) {
+                        alert('Booking cancelled successfully.');
+                    }
+                }
+            }
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const newBookingModal = document.getElementById('newBookingModal');
+            const viewFeedbackModal = document.getElementById('viewFeedbackModal');
+            
+            if (event.target === newBookingModal) {
+                closeNewBookingModal();
+            }
+            if (event.target === viewFeedbackModal) {
+                closeViewFeedbackModal();
+            }
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeNewBookingModal();
+                closeViewFeedbackModal();
+            }
+        });
+    </script>
+</body>
+</html>

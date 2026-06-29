@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - Sign In</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            height: 100vh;
+            display: flex;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+        
+        .background-section {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .login-section {
+            flex: 1;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+        
+        .form-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            color: #374151;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+            background-color: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .password-group {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            text-decoration: underline;
+        }
+        
+        .sign-in-btn {
+            width: 100%;
+            background-color: #1e40af;
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .sign-in-btn:hover:not(:disabled) {
+            background-color: #1d4ed8;
+        }
+        
+        .sign-in-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .remember-me input {
+            margin-right: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+        }
+        
+        .forgot-password {
+            color: #374151;
+            text-decoration: underline;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .forgot-password:hover {
+            color: #1e40af;
+        }
+        
+        .sign-up-link {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .sign-up-link a {
+            color: #1e40af;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        
+        .sign-up-link a:hover {
+            color: #1d4ed8;
+        }
+        
+        /* Error and success message styles */
+        .message {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .error-message {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .success-message {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .background-section {
+                height: 30vh;
+            }
+            
+            .login-section {
+                flex: none;
+                height: 70vh;
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background-section">
+            <img src="./images/Rectangle.png" alt="Waterfall landscape background" class="background-image">
+        </div>
+        
+        <div class="login-section">
+            <div class="login-form">
+                <h1 class="logo">MG Holidays</h1>
+                
+                <h2 class="form-title">Sign in</h2>
+                
+                <div id="messageContainer"></div>
+                <div class="loading" id="loadingMessage">Signing in...</div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="password-group">
+                            <input type="password" id="password" name="password" class="form-input" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">Show</button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="sign-in-btn" id="signInBtn">Sign in</button>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe" checked>
+                            Remember me
+                        </label>
+                        <a href="./Forget Password - Email Page.html" class="forgot-password">Forget Password</a>
+                    </div>
+                    
+                    <div class="sign-up-link">
+                        Don't have an account? <a href="./Sign-Up.html">Sign up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000';
+        
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.textContent = 'Show';
+            }
+        }
+        
+        // Display message function
+        function displayMessage(message, type = 'error') {
+            const messageContainer = document.getElementById('messageContainer');
+            const messageClass = type === 'success' ? 'success-message' : 'error-message';
+            
+            messageContainer.innerHTML = `<div class="message ${messageClass}">${message}</div>`;
+            
+            // Clear message after 5 seconds
+            setTimeout(() => {
+                messageContainer.innerHTML = '';
+            }, 5000);
+        }
+        
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const signInBtn = document.getElementById('signInBtn');
+            const loadingMessage = document.getElementById('loadingMessage');
+            
+            // Basic validation
+            if (!email || !password) {
+                displayMessage('Please fill in all fields.');
+                return;
+            }
+            
+            // Email format validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                displayMessage('Please enter a valid email address.');
+                return;
+            }
+            
+            try {
+                // Show loading state
+                signInBtn.disabled = true;
+                loadingMessage.style.display = 'block';
+                
+                // API call to login endpoint
+                const response = await fetch(`${API_BASE_URL}/api/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        emailid: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Login successful
+                    displayMessage('Login successful! Redirecting...', 'success');
+                    console.log(data);
+                    
+                    // Store user information
+                    const userInfo = {
+                        userid: data.user_id,
+                        username: data.username,
+                        usertype: data.user_type,
+                        email: email
+                    };
+                    
+                    // Store in localStorage or sessionStorage based on remember me
+                    if (rememberMe) {
+                        localStorage.setItem('mgHolidaysUser', JSON.stringify(userInfo));
+                    }
+                    
+                    // Redirect based on user type
+                    setTimeout(() => {
+                        if (data.usertype === 2) {
+                            // Admin user - redirect to admin dashboard
+                            window.location.href = './admin-dashboard.html';
+                        } else {
+                            // Customer user - redirect to customer dashboard
+                            window.location.href = './Home.html';
+                        }
+                    }, 1500);
+                    
+                } else {
+                    // Login failed
+                    const errorMessage = data.detail || data.message || 'Login failed. Please check your credentials.';
+                    displayMessage(errorMessage);
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    displayMessage('Unable to connect to the server. Please check if the API is running on localhost:8000');
+                } else {
+                    displayMessage('An error occurred during login. Please try again.');
+                }
+                
+            } finally {
+                // Hide loading state
+                signInBtn.disabled = false;
+                loadingMessage.style.display = 'none';
+            }
+        });
+        
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const storedUser = localStorage.getItem('mgHolidaysUser')
+            
+            // if (storedUser) {
+            //     try {
+            //         const userInfo = JSON.parse(storedUser);
+            //         // Redirect to appropriate dashboard
+            //         if (userInfo.usertype === 2) {
+            //             window.location.href = './admin-dashboard.html';
+            //         } else {
+            //             window.location.href = './dashboard.html';
+            //         }
+            //     } catch (error) {
+            //         // Clear invalid stored data
+            //         localStorage.removeItem('mgHolidaysUser');
+            //     }
+            // }
+        });
+        
+        // Utility function to get current user (for other pages)
+        function getCurrentUser() {
+            const storedUser = localStorage.getItem('mgHolidaysUser')
+            return storedUser ? JSON.parse(storedUser) : null;
+        }
+        
+        // Utility function to logout (for other pages)
+        function logout() {
+            localStorage.removeItem('mgHolidaysUser');
+            window.location.href = './signin.html';
+        }
+    </script>
+</body>
+</html>

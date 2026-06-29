@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - Create Account</title>
+    
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/sign-up.css">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Hero Section with Background Image -->
+        <div class="hero-section">
+            <img src="./images/Rectangle.png" alt="Beautiful waterfall landscape with rocky terrain and lush greenery" class="hero-section__image" style="height: 729px;">
+            <div class="hero-section__overlay"></div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <div class="form-container">
+                <h1 class="brand-title">MG Holidays</h1>
+                
+                <div class="form-card">
+                    <h2 class="form-card__title">Create an account</h2>
+                    <div class="form-card__subtitle">
+                        Already have an account? <a href="./login.html" class="form-card__subtitle-link">Log in</a>
+                    </div>
+                    
+                    <!-- Success Message -->
+                    <div id="successMessage" class="alert alert-success" style="display: none;">
+                        <strong>Success!</strong> Account created successfully. Redirecting to login page...
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="alert alert-danger" style="display: none;">
+                        <strong>Error!</strong> <span id="errorText"></span>
+                    </div>
+                    
+                    <form id="createAccountForm" novalidate>
+                        <div class="form-group">
+                            <label for="username" class="form-group__label">User name</label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username"
+                                class="form-group__input" 
+                                placeholder=""
+                                required
+                            >
+                            <div class="error-message" id="usernameError"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-group__label">Email address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="emailid"
+                                class="form-group__input" 
+                                placeholder=""
+                                required
+                            >
+                            <div class="error-message" id="emailError"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-group__label">Password</label>
+                            <div class="form-group__input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password"
+                                    class="form-group__input form-group__input--with-toggle" 
+                                    placeholder=""
+                                    required
+                                >
+                                <button type="button" class="form-group__toggle" onclick="togglePasswordVisibility('password', this)">
+                                    <svg class="form-group__toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.05 8.05m1.828 1.828L12 12m-1.5 1.5l4.242 4.242M15 12a3 3 0 11-6 0 3 3 0 016 0z" class="eye-off"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" class="eye" style="display: none;"/>
+                                    </svg>
+                                    Hide
+                                </button>
+                            </div>
+                            <div class="form-group__help-text">Use 8 or more characters with a mix of letters, numbers & symbols</div>
+                            <div class="password-strength">
+                                <div class="password-strength__bar" id="passwordStrengthBar"></div>
+                            </div>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
+                        
+                        <button type="submit" class="submit-button" id="submitButton">
+                            Create an account
+                        </button>
+                    </form>
+                    
+                    <div class="login-link">
+                        <span class="login-link__text">Already have an account? </span>
+                        <a href="./login.html" class="login-link__link">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 JavaScript CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        class CreateAccountForm {
+            constructor() {
+                this.form = document.getElementById('createAccountForm');
+                this.usernameInput = document.getElementById('username');
+                this.emailInput = document.getElementById('email');
+                this.passwordInput = document.getElementById('password');
+                this.usernameError = document.getElementById('usernameError');
+                this.emailError = document.getElementById('emailError');
+                this.passwordError = document.getElementById('passwordError');
+                this.submitButton = document.getElementById('submitButton');
+                this.passwordStrengthBar = document.getElementById('passwordStrengthBar');
+                this.successMessage = document.getElementById('successMessage');
+                this.errorMessage = document.getElementById('errorMessage');
+                this.errorText = document.getElementById('errorText');
+                
+                // API Configuration
+                this.apiBaseUrl = 'http://localhost:8000/api'; // Change this to your actual API base URL
+                
+                this.init();
+            }
+
+            init() {
+                this.form.addEventListener('submit', this.handleSubmit.bind(this));
+                this.usernameInput.addEventListener('blur', this.validateUsername.bind(this));
+                this.emailInput.addEventListener('blur', this.validateEmail.bind(this));
+                this.passwordInput.addEventListener('input', this.handlePasswordInput.bind(this));
+                this.passwordInput.addEventListener('blur', this.validatePassword.bind(this));
+                
+                // Clear errors on input
+                this.usernameInput.addEventListener('input', () => this.clearError('username'));
+                this.emailInput.addEventListener('input', () => this.clearError('email'));
+                this.passwordInput.addEventListener('input', () => this.clearError('password'));
+            }
+
+            validateUsername() {
+                const username = this.usernameInput.value.trim();
+                
+                if (!username) {
+                    this.showError('username', 'Username is required');
+                    return false;
+                }
+                
+                if (username.length < 3) {
+                    this.showError('username', 'Username must be at least 3 characters long');
+                    return false;
+                }
+                
+                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    this.showError('username', 'Username can only contain letters, numbers, and underscores');
+                    return false;
+                }
+                
+                this.clearError('username');
+                return true;
+            }
+
+            validateEmail() {
+                const email = this.emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (!email) {
+                    this.showError('email', 'Email address is required');
+                    return false;
+                }
+                
+                if (!emailRegex.test(email)) {
+                    this.showError('email', 'Please enter a valid email address');
+                    return false;
+                }
+                
+                this.clearError('email');
+                return true;
+            }
+
+            handlePasswordInput() {
+                this.updatePasswordStrength();
+                this.clearError('password');
+            }
+
+            updatePasswordStrength() {
+                const password = this.passwordInput.value;
+                const strength = this.calculatePasswordStrength(password);
+                
+                this.passwordStrengthBar.className = `password-strength__bar password-strength__bar--${strength}`;
+            }
+
+            calculatePasswordStrength(password) {
+                let score = 0;
+                
+                if (password.length >= 8) score++;
+                if (/[a-z]/.test(password)) score++;
+                if (/[A-Z]/.test(password)) score++;
+                if (/[0-9]/.test(password)) score++;
+                if (/[^A-Za-z0-9]/.test(password)) score++;
+                
+                if (score <= 2) return 'weak';
+                if (score === 3) return 'fair';
+                if (score === 4) return 'good';
+                return 'strong';
+            }
+
+            validatePassword() {
+                const password = this.passwordInput.value;
+                
+                if (!password) {
+                    this.showError('password', 'Password is required');
+                    return false;
+                }
+                
+                if (password.length < 8) {
+                    this.showError('password', 'Password must be at least 8 characters long');
+                    return false;
+                }
+                
+                if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+                    this.showError('password', 'Password must contain uppercase, lowercase, and numbers');
+                    return false;
+                }
+                
+                this.clearError('password');
+                return true;
+            }
+
+            showError(field, message) {
+                let input, errorElement;
+                
+                switch(field) {
+                    case 'username':
+                        input = this.usernameInput;
+                        errorElement = this.usernameError;
+                        break;
+                    case 'email':
+                        input = this.emailInput;
+                        errorElement = this.emailError;
+                        break;
+                    case 'password':
+                        input = this.passwordInput;
+                        errorElement = this.passwordError;
+                        break;
+                }
+                
+                input.classList.add('error');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            clearError(field) {
+                let input, errorElement;
+                
+                switch(field) {
+                    case 'username':
+                        input = this.usernameInput;
+                        errorElement = this.usernameError;
+                        break;
+                    case 'email':
+                        input = this.emailInput;
+                        errorElement = this.emailError;
+                        break;
+                    case 'password':
+                        input = this.passwordInput;
+                        errorElement = this.passwordError;
+                        break;
+                }
+                
+                input.classList.remove('error');
+                errorElement.style.display = 'none';
+            }
+
+            showLoading() {
+                this.form.classList.add('loading');
+                this.submitButton.innerHTML = `
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Creating account...
+                `;
+                this.submitButton.disabled = true;
+            }
+
+            hideLoading() {
+                this.form.classList.remove('loading');
+                this.submitButton.textContent = 'Create an account';
+                this.submitButton.disabled = false;
+            }
+
+            showSuccessMessage() {
+                this.successMessage.style.display = 'block';
+                this.errorMessage.style.display = 'none';
+            }
+
+            showErrorMessage(message) {
+                this.errorText.textContent = message;
+                this.errorMessage.style.display = 'block';
+                this.successMessage.style.display = 'none';
+            }
+
+            hideMessages() {
+                this.successMessage.style.display = 'none';
+                this.errorMessage.style.display = 'none';
+            }
+
+            async createUser(userData) {
+                try {
+                    const response = await fetch(`${this.apiBaseUrl}/createuser`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userData)
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                    }
+
+                    return data;
+                } catch (error) {
+                    console.error('API Error:', error);
+                    throw error;
+                }
+            }
+
+            redirectToLogin() {
+                setTimeout(() => {
+                    window.location.href = './login.html';
+                }, 2000); // 2 second delay to show success message
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                // Hide any previous messages
+                this.hideMessages();
+                
+                const isUsernameValid = this.validateUsername();
+                const isEmailValid = this.validateEmail();
+                const isPasswordValid = this.validatePassword();
+                
+                if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
+                    return;
+                }
+
+                this.showLoading();
+
+                try {
+                    // Prepare user data according to API documentation
+                    const userData = {
+                        username: this.usernameInput.value.trim(),
+                        emailid: this.emailInput.value.trim(),
+                        password: this.passwordInput.value
+                    };
+
+                    // Call the API
+                    const response = await this.createUser(userData);
+                    
+                    // Handle successful response
+                    if (response.success) {
+                        this.showSuccessMessage();
+                        
+                        // Reset form
+                        this.form.reset();
+                        this.passwordStrengthBar.className = 'password-strength__bar';
+                        
+                        // Redirect to login page
+                        this.redirectToLogin();
+                    } else {
+                        throw new Error(response.message || 'Failed to create account');
+                    }
+                    
+                } catch (error) {
+                    let errorMessage = 'Something went wrong. Please try again.';
+                    
+                    if (error.message.includes('fetch')) {
+                        errorMessage = 'Unable to connect to server. Please check your internet connection.';
+                    } else if (error.message.includes('400')) {
+                        errorMessage = 'Invalid data provided. Please check your inputs.';
+                    } else if (error.message.includes('409')) {
+                        errorMessage = 'Username or email already exists. Please try different credentials.';
+                    } else if (error.message.includes('500')) {
+                        errorMessage = 'Server error. Please try again later.';
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+                    
+                    this.showErrorMessage(errorMessage);
+                } finally {
+                    this.hideLoading();
+                }
+            }
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+            const eyeIcon = button.querySelector('.eye');
+            const eyeOffIcon = button.querySelector('.eye-off');
+            const text = button.lastChild;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.style.display = 'block';
+                eyeOffIcon.style.display = 'none';
+                text.textContent = ' Show';
+            } else {
+                input.type = 'password';
+                eyeIcon.style.display = 'none';
+                eyeOffIcon.style.display = 'block';
+                text.textContent = ' Hide';
+            }
+        }
+
+        // Initialize the form when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new CreateAccountForm();
+        });
+
+        // Responsive image loading simulation
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroImage = document.querySelector('.hero-section__image');
+            
+            // Simulate image loading with a placeholder gradient
+            heroImage.style.background = 'linear-gradient(135deg, #0369a1 0%, #1e40af 50%, #059669 100%)';
+            
+            // Add subtle animation to the overlay
+            const overlay = document.querySelector('.hero-section__overlay');
+            overlay.style.animation = 'fadeIn 1s ease-out';
+        });
+    </script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .alert {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .alert-success {
+            background-color: #d1e7dd;
+            border: 1px solid #badbcc;
+            color: #0f5132;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - Facilities</title>
+    
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/facilities.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header class="header header--transparent" id="header">
+        <div class="header__container">
+            <a href="#" class="header__logo">MG<br>HOLIDAYS</a>
+            <nav>
+                <ul class="header__nav" id="mainNav">
+                    <li><a href="./Home.html" class="header__nav-link" onclick="window.location.href='./Home.html'; return false;">Home</a></li>
+                    <li><a href="./Facilities.html" class="header__nav-link" onclick="window.location.href='./Facilities.html'; return false;">Facilities</a></li>
+                    <li><a href="./Rooms.html" class="header__nav-link" onclick="window.location.href='./Rooms.html'; return false;">Rooms</a></li>
+                    <li><a href="./Contact-us.html" class="header__nav-link" onclick="window.location.href='./Contact-us.html'; return false;">Contact us</a></li>
+                    <li id="myBookingsNav" style="display:none;"><a href="./My Bookings.html" class="header__nav-link">My Bookings</a></li>
+                    <li>
+                        <a href="#" class="header__nav-link" id="loginLogoutBtn">
+                            <span id="loginLogoutIcon"></span>
+                            <span id="loginLogoutText"></span>
+                        </a>
+                    </li>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var user = localStorage.getItem('mgHolidaysUser');
+                            var loginLogoutBtn = document.getElementById('loginLogoutBtn');
+                            var loginLogoutText = document.getElementById('loginLogoutText');
+                            var loginLogoutIcon = document.getElementById('loginLogoutIcon');
+                            var myBookingsNav = document.getElementById('myBookingsNav');
+
+                            if (user) {
+                                // User is logged in
+                                loginLogoutText.textContent = "Logout";
+                                loginLogoutIcon.innerHTML = '<i class="fas fa-sign-out-alt"></i>';
+                                loginLogoutBtn.onclick = function(e) {
+                                    e.preventDefault();
+                                    localStorage.removeItem('mgHolidaysUser');
+                                    window.location.href = "./Login.html";
+                                };
+                                if (myBookingsNav) myBookingsNav.style.display = '';
+                            } else {
+                                // User not logged in
+                                loginLogoutText.textContent = "Login/Register";
+                                loginLogoutIcon.innerHTML = '<i class="fas fa-sign-in-alt"></i>';
+                                loginLogoutBtn.onclick = function(e) {
+                                    e.preventDefault();
+                                    window.location.href = "./Login.html";
+                                };
+                                if (myBookingsNav) myBookingsNav.style.display = 'none';
+                            }
+                        });
+                    </script>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Notification -->
+    <!-- <div class="notification" id="notification">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="notificationText">Login/Register to Book Rooms</span>
+        <button class="notification__close" onclick="closeNotification()">&times;</button>
+    </div> -->
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <img src="./images/image1.png" alt="Hogenakkal Falls Resort background" class="hero__bg-image" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;filter: brightness(0.6);">
+        <div class="hero__container" style="position:relative;z-index:1;">
+            <div class="hero__content">
+                <div class="hero__welcome">WELCOME TO</div>
+                <h1 class="hero__title">MG<br>HOLIDAYS</h1>
+                <p class="hero__description">
+                    Nestled near the majestic Hogenakkal Falls,<br>
+                    MG Holidays is your perfect escape into nature and comfort.
+                </p>
+                <a href="#rooms" class="hero__cta">
+                    <i class="fas fa-calendar-check"></i>
+                    BOOK NOW
+                </a>
+            </div>
+        </div>
+        <div class="hero__scroll" onclick="scrollToSection('facilities')">
+            <span>Scroll</span>
+            <div class="hero__scroll-icon"></div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="facilities-section" id="facilities">
+        <div class="facilities-container">
+            <h2 class="facilities-title">FACILITIES</h2>
+            <p class="facilities-subtitle">
+                At MG Holidays, it's not just about where you sleep — it's about how you feel. Every moment is designed to immerse you in ease, indulgence, and the charm of Hogenakkal's natural beauty. Discover thoughtful touches, seamless service, and comforts that make your stay unforgettable.
+            </p>
+            <div class="facilities-card">
+                <img src="./images/f1.png" alt="The Gym at MG Holidays" class="facilities-image">
+                <div class="facilities-label">
+                    THE GYM
+                </div>
+            </div>
+            <div class="facilities-card">
+                <img src="./images/f2.png" alt="Air-conditioned rooms at MG Holidays" class="facilities-image">
+                <div class="facilities-label">
+                    AIR-CONDITIONED ROOMS
+                </div>
+            </div>
+            <div class="facilities-card">
+                <img src="./images/f3.png" alt="The Spa at MG Holidays" class="facilities-image">
+                <div class="facilities-label">
+                    THE SPA
+                </div>
+            </div>
+            <div class="facilities-card">
+                <img src="./images/f4.png" alt="Swimming Pool at MG Holidays" class="facilities-image">
+                <div class="facilities-label">
+                    SWIMMING POOL
+                </div>
+            </div>
+            <div class="facilities-card">
+                <img src="./images/f5.png" alt="Restaurant at MG Holidays" class="facilities-image">
+                <div class="facilities-label">
+                    RESTAURANT
+                </div>
+            </div>
+            <div class="facilities-card">
+                <img src="./images/f6.png" alt="Laundry service at MG Holidays" class="facilities-image">
+                <div class="facilities-label">
+                    LAUNDRY
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="rooms">
+        <div class="testimonials__container">
+            <h2 class="testimonials__title">What Our Guests Say</h2>
+            <div class="testimonial" id="testimonialContent">
+                <p class="testimonial__quote" id="testimonialQuote" style="opacity: 1; transition: opacity 0.3s;">Loading feedback...</p>
+                <p class="testimonial__author" id="testimonialAuthor" style="opacity: 1; transition: opacity 0.3s;"></p>
+            </div>
+            <div class="testimonials__nav">
+                <button class="testimonials__nav-btn" onclick="previousTestimonial()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonials__nav-btn" onclick="nextTestimonial()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer__content">
+            <div>
+                <div class="footer__brand">MG</div>
+                <div class="footer__brand2">HOLIDAYS</div>
+                <div class="footer__address">
+                    MG Holidays, Near Hogenakkal Main Falls, <br>
+                    Dharmapuri District, Tamil Nadu<br>
+                    +91 98765 43210<br>
+                    info@mgholidays.in
+                </div>
+            </div>
+            <div>
+                <h3 class="footer__section-title">About Us</h3>
+                <h3 class="footer__section-title">Contact</h3>
+                <h3 class="footer__section-title">Terms & Conditions</h3>
+            </div>
+            <div>
+                <div class="footer__social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer__section-title">Subscribe to our newsletter</h3>
+                <div class="footer__newsletter">
+                    <input type="email" placeholder="Email Address" id="newsletterEmail">
+                    <button onclick="subscribeNewsletter()">OK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // API Base URL - CHANGE THIS TO YOUR ACTUAL API URL
+        const API_BASE_URL = 'http://localhost:8000/api';
+
+        // Global variables
+        let currentTestimonial = 0;
+        let feedbacks = [];
+
+        // Fetch all feedbacks from API
+        async function fetchFeedbacks() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/getallfeedbacks`);
+                if (!response.ok) throw new Error('Failed to fetch feedbacks');
+                feedbacks = await response.json();
+                if (feedbacks.length > 0) {
+                    updateTestimonial();
+                } else {
+                    // Fallback to default testimonial if no feedbacks
+                    document.getElementById('testimonialQuote').textContent = '"A peaceful stay with stunning views of the falls. MG Holidays made our trip unforgettable!"';
+                    document.getElementById('testimonialAuthor').textContent = 'Guest Review';
+                }
+            } catch (error) {
+                console.error('Error fetching feedbacks:', error);
+                document.getElementById('testimonialQuote').textContent = '"Unable to load testimonials at this time."';
+                document.getElementById('testimonialAuthor').textContent = '';
+            }
+        }
+
+        // Update testimonial display
+        function updateTestimonial() {
+            if (feedbacks.length === 0) return;
+
+            const quote = document.getElementById('testimonialQuote');
+            const author = document.getElementById('testimonialAuthor');
+            
+            // Fade out
+            quote.style.opacity = '0';
+            author.style.opacity = '0';
+            
+            setTimeout(() => {
+                const feedback = feedbacks[currentTestimonial];
+                quote.textContent = `"${feedback.feedback}"`;
+                author.textContent = `${feedback.username}`;
+                
+                // Fade in
+                quote.style.opacity = '1';
+                author.style.opacity = '1';
+            }, 300);
+        }
+
+        function previousTestimonial() {
+            if (feedbacks.length === 0) return;
+            currentTestimonial = currentTestimonial > 0 ? currentTestimonial - 1 : feedbacks.length - 1;
+            updateTestimonial();
+        }
+
+        function nextTestimonial() {
+            if (feedbacks.length === 0) return;
+            currentTestimonial = currentTestimonial < feedbacks.length - 1 ? currentTestimonial + 1 : 0;
+            updateTestimonial();
+        }
+
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Close notification
+        function closeNotification() {
+            // Function kept for compatibility but notification is commented out
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing to our newsletter!');
+                document.getElementById('newsletterEmail').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch feedbacks from API
+            fetchFeedbacks();
+
+            // Logout handler
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('mgHolidaysUser');
+                    window.location.href = "./Login.html";
+                };
+            }
+
+            // Simulate feature images
+            const featureImages = document.querySelectorAll('.facilities-card img');
+            if (featureImages.length >= 2) {
+                featureImages[0].style.background = `
+                    linear-gradient(135deg, #f8f9fa 0%, #e9ecef 30%, #fff3cd 60%, #f8f9fa 100%)
+                `;
+                
+                featureImages[1].style.background = `
+                    linear-gradient(135deg, #0ea5e9 0%, #0369a1 30%, #1e40af 60%, #3b82f6 100%)
+                `;
+            }
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.dataset.delay || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, delay);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.facilities-card, .testimonials__title, .testimonial').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Auto-rotate testimonials every 5 seconds
+            setInterval(() => {
+                if (feedbacks.length > 0) nextTestimonial();
+            }, 5000);
+        });
+
+        // Navigation link click handlers
+        document.querySelectorAll('.header__nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+
+        // Enhanced hover effects
+        document.querySelectorAll('.hero__cta, .feature-card__cta').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.02)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Newsletter form submission with Enter key
+        document.getElementById('newsletterEmail').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                subscribeNewsletter();
+            }
+        });
+    </script>
+</body>
+</html>

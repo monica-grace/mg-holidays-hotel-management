@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Holidays - My Bookings</title>
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/my_bookings.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <a class="header__logo">MG<br>HOLIDAYS</a>
+            <nav style="margin-left: 453px;">
+                <ul class="header__nav">
+                    <li><a href="./Home.html" class="header__nav-link" onclick="window.location.href='./Home.html'; return false;">Home</a></li>
+                    <li><a href="./Facilities.html" class="header__nav-link" onclick="window.location.href='./Facilities.html'; return false;">Facilities</a></li>
+                    <li><a href="./Rooms.html" class="header__nav-link" onclick="window.location.href='./Rooms.html'; return false;">Rooms</a></li>
+                    <li><a href="./Contact-us.html" class="header__nav-link" onclick="window.location.href='./Contact-us.html'; return false;">Contact us</a></li>
+                    <li><a href="./My Bookings.html" class="header__nav-link active">My Bookings</a></li>
+                    <li><a href="#" class="header__nav-link" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var logoutA = document.getElementById('logoutLink');
+                            if (logoutA) {
+                                logoutA.onclick = function(e) {
+                                    e.preventDefault();
+                                    window.localStorage.removeItem('mgHolidaysUser');
+                                    window.location.href = "./Login.html";
+                                };
+                            }
+                        });
+                    </script>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Title and Feedback Button -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <h1 class="bookings-title">MY BOOKINGS</h1>
+            <button class="feedback-btn" style="margin-top: 70px;" onclick="openFeedbackModal()">Feedback</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="bookings-table-container">
+            <table class="bookings-table" id="bookingsTable">
+                <thead>
+                    <tr>
+                        <th>S. No.</th>
+                        <th>Check-in Date</th>
+                        <th>Check-out Date</th>
+                        <th>Room Type</th>
+                        <th>No. Of Rooms</th>
+                        <th>No. Of People</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingsTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align:center;">Loading...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Feedback Modal -->
+    <div class="modal-overlay" id="feedbackModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeFeedbackModal()">&times;</button>
+            <h2 class="modal-title">Feedback</h2>
+            <p class="modal-subtitle">Your experience helps us grow and serve you better. Share your thoughts, suggestions, or compliments</p>
+            
+            <textarea class="feedback-textarea" id="feedbackText" placeholder="Enter your Feedback here"></textarea>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="submitFeedback()">Share</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modify Booking Modal -->
+    <div class="modal-overlay" id="modifyModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModifyModal()">&times;</button>
+            <h2 class="modal-title">Modify Booking</h2>
+            
+            <form id="modifyForm">
+                <div class="form-group">
+                    <label class="form-label">Check-In Date</label>
+                    <input type="date" class="form-input" id="checkinDate">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Check-Out Date</label>
+                    <input type="date" class="form-input" id="checkoutDate">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Room Type</label>
+                    <select class="form-select" id="roomType">
+                        <option value="">Loading rooms...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">No. Of Rooms</label>
+                    <div class="counter-group">
+                        <button type="button" class="counter-btn" onclick="decrementCounter('rooms')">−</button>
+                        <span class="counter-value" id="roomsCount">1</span>
+                        <button type="button" class="counter-btn" onclick="incrementCounter('rooms')">+</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">No. Of People</label>
+                    <div class="counter-group">
+                        <button type="button" class="counter-btn" onclick="decrementCounter('people')">−</button>
+                        <span class="counter-value" id="peopleCount">1</span>
+                        <button type="button" class="counter-btn" onclick="incrementCounter('people')">+</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModifyModal()">Cancel</button>
+                <button class="modal-btn modal-btn-save" onclick="saveModifications()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__content">
+            <div>
+                <div class="footer__brand">MG</div>
+                <div class="footer__brand2">HOLIDAYS</div>
+                <div class="footer__address">
+                    MG Holidays, Near Hogenakkal Main Falls,<br>
+                    Dharmapuri District, Tamil Nadu<br>
+                    +91 98765 43210<br>
+                    info@mgholidays.in
+                </div>
+            </div>
+            <div>
+                <div class="footer__section-title">About Us</div>
+                <div class="footer__section-title">Contact</div>
+                <div class="footer__section-title">Terms & Conditions</div>
+            </div>
+            <div>
+                <a class="footer__social-item">
+                    <i class="fab fa-facebook"></i>
+                    Facebook
+                </a>
+                <a class="footer__social-item">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a>
+                <a class="footer__social-item">
+                    <i class="fab fa-instagram"></i>
+                    Instagram
+                </a>
+            </div>
+            <div>
+                <div class="footer__newsletter-title">Subscribe to our newsletter</div>
+                <div class="footer__newsletter">
+                    <input type="email" placeholder="Email Address" id="newsletterEmail">
+                    <button onclick="subscribeNewsletter()">OK</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ========== API BASE URL ==========
+        const API_BASE = "http://localhost:8000";
+
+        // ========== GLOBALS ==========
+        let userId = null;
+        let bookings = [];
+        let roomTypes = [];
+        let currentModifyBookingId = null;
+
+        // ========== UTILS ==========
+        function formatDateToDisplay(dateStr) {
+            if (!dateStr) return "";
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const [year, month, day] = dateStr.split("-");
+            return `${day}-${months[parseInt(month, 10) - 1]}-${year}`;
+        }
+
+        function getRoomTypeDisplay(type) {
+            if (!type) return "";
+            return type.charAt(0).toUpperCase() + type.slice(1);
+        }
+
+        // ========== FETCH ROOM TYPES ==========
+        async function fetchRoomTypes() {
+            try {
+                const res = await fetch(`${API_BASE}/api/getallrooms`);
+                if (!res.ok) throw new Error("Failed to fetch room types");
+                const rooms = await res.json();
+                roomTypes = rooms.map(room => ({
+                    id: room.id,
+                    type: room.type
+                }));
+                return roomTypes;
+            } catch (e) {
+                console.error("Error fetching room types:", e);
+                return [];
+            }
+        }
+
+        // ========== POPULATE ROOM DROPDOWN ==========
+        function populateRoomDropdown(selectedRoomId = null) {
+            const dropdown = document.getElementById('roomType');
+            dropdown.innerHTML = '';
+            
+            if (roomTypes.length === 0) {
+                dropdown.innerHTML = '<option value="">No rooms available</option>';
+                return;
+            }
+            
+            roomTypes.forEach(room => {
+                const option = document.createElement('option');
+                option.value = room.id;
+                option.textContent = room.type;
+                if (selectedRoomId && room.id == selectedRoomId) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
+            });
+        }
+
+        // ========== FETCH USER & BOOKINGS ON PAGE LOAD ==========
+        document.addEventListener('DOMContentLoaded', async function() {
+            const userStr = window.localStorage.getItem("mgHolidaysUser");
+            if (!userStr) {
+                alert("User not logged in. Please login.");
+                window.location.href = "./Login.html";
+                return;
+            }
+            try {
+                const user = JSON.parse(userStr);
+                userId = user.userid;
+                if (!userId) throw new Error("User ID not found.");
+            } catch (e) {
+                alert("Invalid user session. Please login again.");
+                window.location.href = "./Login.html";
+                return;
+            }
+            
+            await fetchRoomTypes();
+            await fetchAndRenderBookings();
+        });
+
+        async function fetchAndRenderBookings() {
+            const tbody = document.getElementById("bookingsTableBody");
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Loading...</td></tr>`;
+            try {
+                const res = await fetch(`${API_BASE}/api/getmybookings/${encodeURIComponent(userId)}`);
+                if (!res.ok) throw new Error("Failed to fetch bookings");
+                bookings = await res.json();
+                
+                if (!Array.isArray(bookings) || bookings.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No bookings found.</td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = "";
+                bookings.forEach((booking, idx) => {
+                    const status = parseInt(booking?.status) || 0;
+                    let actionsHtml = "";
+                    
+                    if (status === 4) {
+                        actionsHtml = `
+                            <span class="status-completed">
+                                Stay Completed
+                                <div class="tooltip-details">
+                                    Check-in: ${formatDateToDisplay(booking?.checkin_date)} ${booking?.checkin_time || ""}<br>
+                                    Check-out: ${formatDateToDisplay(booking?.checkout_date)} ${booking?.checkout_time || ""}
+                                </div>
+                            </span>
+                        `;
+                    } else if (status === 5) {
+                        actionsHtml = `<span class="status-cancelled">Cancelled</span>`;
+                    } else if (status === 2) {
+                        actionsHtml = `
+                            <a class="action-link" data-booking-id="${booking.id}" onclick="openModifyModal(this)">Modify</a>
+                            <a class="action-link action-cancel" data-booking-id="${booking.id}" onclick="cancelBooking(this)">Cancel</a>
+                        `;
+                    } else if (status === 3) {
+                        actionsHtml = `
+                            <span class="status-completed">
+                                Checked In
+                                <div class="tooltip-details">
+                                    Check-in: ${formatDateToDisplay(booking?.checkin_date)} ${booking?.checkin_time || ""}
+                                </div>
+                            </span>
+                        `;
+                    } else if (status === 1) {
+                        actionsHtml = `<span style="color: #f59e0b; font-weight: 600;">Pending Approval</span>`;
+                    }
+                    
+                    tbody.innerHTML += `
+                        <tr data-booking-id="${booking.id}">
+                            <td>${idx + 1}</td>
+                            <td>${formatDateToDisplay(booking.checkin_date)}</td>
+                            <td>${formatDateToDisplay(booking.checkout_date)}</td>
+                            <td>${getRoomTypeDisplay(booking.room_type)}</td>
+                            <td>${booking.no_of_rooms}</td>
+                            <td>${booking.no_of_people}</td>
+                            <td>${actionsHtml}</td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                console.error("Error fetching bookings:", e);
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:red;">Error loading bookings.</td></tr>`;
+            }
+        }
+
+        // ========== FEEDBACK ==========
+        function openFeedbackModal() {
+            document.getElementById('feedbackModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            document.getElementById('feedbackText').value = '';
+        }
+
+        async function submitFeedback() {
+            const feedback = document.getElementById('feedbackText').value.trim();
+            if (!feedback) {
+                alert('Please enter your feedback before submitting.');
+                return;
+            }
+            try {
+                const res = await fetch(`${API_BASE}/api/addfeedback`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        userid: userId,
+                        feedback: feedback
+                    })
+                });
+                
+                if (!res.ok) throw new Error("Failed to submit feedback");
+                alert('Thank you for your feedback! We appreciate your input.');
+                closeFeedbackModal();
+            } catch (e) {
+                console.error("Error submitting feedback:", e);
+                alert("Failed to submit feedback. Please try again.");
+            }
+        }
+
+        // ========== MODIFY BOOKING ==========
+        function openModifyModal(element) {
+            const bookingId = element.getAttribute("data-booking-id");
+            const booking = bookings.find(b => String(b.id) === String(bookingId));
+            
+            if (!booking) {
+                alert("Booking not found.");
+                return;
+            }
+            
+            currentModifyBookingId = bookingId;
+            
+            document.getElementById('checkinDate').value = booking.checkin_date;
+            document.getElementById('checkoutDate').value = booking.checkout_date;
+            populateRoomDropdown(booking.room_id);
+            document.getElementById('roomsCount').textContent = booking.no_of_rooms;
+            document.getElementById('peopleCount').textContent = booking.no_of_people;
+            
+            document.getElementById('modifyModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModifyModal() {
+            document.getElementById('modifyModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            currentModifyBookingId = null;
+        }
+
+        async function saveModifications() {
+            if (!currentModifyBookingId) return;
+            
+            const checkinDate = document.getElementById('checkinDate').value;
+            const checkoutDate = document.getElementById('checkoutDate').value;
+            const roomId = parseInt(document.getElementById('roomType').value);
+            const noOfRooms = parseInt(document.getElementById('roomsCount').textContent, 10);
+            const noOfPeople = parseInt(document.getElementById('peopleCount').textContent, 10);
+
+            if (!checkinDate || !checkoutDate || !roomId || !noOfRooms || !noOfPeople) {
+                alert("Please fill all fields.");
+                return;
+            }
+            
+            if (new Date(checkinDate) >= new Date(checkoutDate)) {
+                alert("Check-out date must be after check-in date.");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/api/updatebooking/${encodeURIComponent(currentModifyBookingId)}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        checkin_date: checkinDate,
+                        checkout_date: checkoutDate,
+                        room_id: roomId,
+                        no_of_rooms: noOfRooms,
+                        no_of_people: noOfPeople
+                    })
+                });
+                
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.message || "Failed to modify booking");
+                }
+                
+                alert('Booking modifications saved successfully!');
+                closeModifyModal();
+                await fetchAndRenderBookings();
+            } catch (e) {
+                console.error("Error modifying booking:", e);
+                alert(e.message || "Failed to modify booking. Please try again.");
+            }
+        }
+
+        // ========== CANCEL BOOKING ==========
+        async function cancelBooking(element) {
+            const bookingId = element.getAttribute("data-booking-id");
+            if (!bookingId) return;
+            
+            if (!confirm('Are you sure you want to cancel this booking?')) return;
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/cancelbooking/${encodeURIComponent(bookingId)}`, {
+                    method: "DELETE"
+                });
+                
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.message || "Failed to cancel booking");
+                }
+                
+                const result = await res.json();
+                alert(result.message || 'Booking cancelled successfully.');
+                await fetchAndRenderBookings();
+            } catch (e) {
+                console.error("Error cancelling booking:", e);
+                alert(e.message || "Failed to cancel booking. Please try again.");
+            }
+        }
+
+        // ========== COUNTER FUNCTIONS ==========
+        function incrementCounter(type) {
+            const countElement = document.getElementById(type + 'Count');
+            let currentValue = parseInt(countElement.textContent);
+            if (currentValue < 10) {
+                countElement.textContent = currentValue + 1;
+            }
+        }
+
+        function decrementCounter(type) {
+            const countElement = document.getElementById(type + 'Count');
+            let currentValue = parseInt(countElement.textContent);
+            if (currentValue > 1) {
+                countElement.textContent = currentValue - 1;
+            }
+        }
+
+        // ========== NEWSLETTER ==========
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing to our newsletter!');
+                document.getElementById('newsletterEmail').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // ========== MODAL CLOSE ON OUTSIDE CLICK ==========
+        window.addEventListener('click', function(event) {
+            const feedbackModal = document.getElementById('feedbackModal');
+            const modifyModal = document.getElementById('modifyModal');
+            if (event.target === feedbackModal) {
+                closeFeedbackModal();
+            }
+            if (event.target === modifyModal) {
+                closeModifyModal();
+            }
+        });
+
+        // ========== MODAL CLOSE ON ESC ==========
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeFeedbackModal();
+                closeModifyModal();
+            }
+        });
+    </script>
+</body>
+</html>
